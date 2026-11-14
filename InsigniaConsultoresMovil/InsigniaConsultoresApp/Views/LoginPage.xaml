@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="InsigniaConsultoresApp.Views.LoginPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False"
+    BackgroundColor="{StaticResource BrandBackground}">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Hero compacto: logo arriba + título; altura según contenido (sin HeightRequest fijo) -->
+        <Border Grid.Row="0" StrokeThickness="0" Padding="0,32,0,24">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="{StaticResource BrandDark}" Offset="0.0" />
+                    <GradientStop Color="{StaticResource BrandPrimary}" Offset="0.55" />
+                    <GradientStop Color="{StaticResource BrandLight}" Offset="1.0" />
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <VerticalStackLayout HorizontalOptions="Center" Spacing="10">
+                <!-- Logo 56x56, radio 12, sombra -->
+                <Border WidthRequest="56" HeightRequest="56" StrokeThickness="0"
+                        StrokeShape="RoundRectangle 12" BackgroundColor="White">
+                    <Border.Shadow>
+                        <Shadow Brush="#000000" Opacity="0.2" Radius="12" Offset="0,4" />
+                    </Border.Shadow>
+                    <Image Source="brand_logo.png" Aspect="AspectFill" />
+                </Border>
+
+                <Label Text="Insignia Consultores Financieros" TextColor="White" FontSize="18"
+                       FontAttributes="Bold" HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+        </Border>
+
+        <!-- Formulario de login: inputs sin caja, etiquetas arriba, solo línea inferior -->
+        <VerticalStackLayout Grid.Row="1" Padding="24,28" Spacing="20">
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Usuario" Style="{StaticResource BrandFieldLabel}" />
+                <Entry Text="{Binding Username}"
+                       Keyboard="Default"
+                       Style="{StaticResource BrandEntry}"
+                       Focused="OnUsernameFocused"
+                       Unfocused="OnUsernameUnfocused" />
+                <BoxView x:Name="UsernameLine" HeightRequest="1"
+                         Color="{StaticResource BrandInputBorder}" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Spacing="6">
+                <Label Text="Contraseña" Style="{StaticResource BrandFieldLabel}" />
+                <Entry Text="{Binding Password}"
+                       IsPassword="True"
+                       Style="{StaticResource BrandEntry}"
+                       Focused="OnPasswordFocused"
+                       Unfocused="OnPasswordUnfocused" />
+                <BoxView x:Name="PasswordLine" HeightRequest="1"
+                         Color="{StaticResource BrandInputBorder}" />
+            </VerticalStackLayout>
+
+            <!-- Error: solo visible cuando hay mensaje -->
+            <Label Text="{Binding ErrorMessage}"
+                   TextColor="#c53030"
+                   IsVisible="{Binding HasError}" />
+
+            <!-- Botón con spinner en overlay -->
+            <Grid>
+                <Button Text="Iniciar sesión"
+                        Command="{Binding LoginCommand}"
+                        IsEnabled="{Binding IsNotBusy}"
+                        Style="{StaticResource BrandButton}" />
+                <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                   IsVisible="{Binding IsBusy}"
+                                   Color="White"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center" />
+            </Grid>
+
+        </VerticalStackLayout>
+
+        <!-- Footer -->
+        <Label Grid.Row="2" Text="By DESI" TextColor="{StaticResource Gray500}"
+               FontSize="12" HorizontalOptions="Center" Margin="0,8,0,16" />
+
+    </Grid>
+
+</ContentPage>

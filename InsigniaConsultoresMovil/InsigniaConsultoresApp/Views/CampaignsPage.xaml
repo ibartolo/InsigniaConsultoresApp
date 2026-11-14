@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="InsigniaConsultoresApp.Views.CampaignsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Campañas"
+    BackgroundColor="{StaticResource BrandBackground}">
+
+    <Grid>
+
+        <!-- Lista de campañas WhatsApp con pull-to-refresh. -->
+        <RefreshView
+            IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
+            Command="{Binding RefreshCommand}">
+            <CollectionView
+                ItemsSource="{Binding Campaigns}"
+                SelectionMode="Single"
+                SelectionChanged="OnCampaignSelected">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Margin="16,8"
+                            Padding="16,14"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 12"
+                            BackgroundColor="{StaticResource BrandSurface}">
+                            <Border.Shadow>
+                                <Shadow Brush="#000000" Opacity="0.06" Radius="8" Offset="0,2" />
+                            </Border.Shadow>
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                                <Label
+                                    Text="{Binding Nombre}"
+                                    TextColor="{StaticResource BrandPrimary}"
+                                    FontSize="16"
+                                    FontAttributes="Bold"
+                                    LineBreakMode="TailTruncation"
+                                    VerticalOptions="Center" />
+                                <Label
+                                    Grid.Column="1"
+                                    Text="{Binding FechaCreacion, StringFormat='{0:dd/MM/yyyy}'}"
+                                    TextColor="{StaticResource Gray500}"
+                                    FontSize="13"
+                                    VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </RefreshView>
+
+        <!-- Cargando -->
+        <ActivityIndicator
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            Color="{StaticResource BrandOrange}"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+
+        <!-- Error + reintentar -->
+        <VerticalStackLayout
+            IsVisible="{Binding HasError}"
+            Padding="24"
+            Spacing="12"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+            <Label
+                Text="{Binding ErrorMessage}"
+                TextColor="#c53030"
+                FontSize="14"
+                HorizontalTextAlignment="Center" />
+            <Button
+                Text="Reintentar"
+                Command="{Binding LoadCommand}"
+                Style="{StaticResource BrandPrimaryButton}"
+                WidthRequest="160"
+                HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+        <!-- Vacío -->
+        <Label
+            Text="No hay campañas de WhatsApp"
+            IsVisible="{Binding IsEmpty}"
+            TextColor="{StaticResource Gray500}"
+            FontSize="14"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+
+    </Grid>
+
+</ContentPage>

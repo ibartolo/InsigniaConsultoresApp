@@ -1,0 +1,58 @@
+# openspec/config.yaml
+# Configuración SDD del proyecto InsigniaConsultoresApp (móvil)
+schema: spec-driven
+
+context: |
+  Project: Insignia Consultores AXA (insurance agency) mobile app
+  Stack: .NET MAUI (single project), .NET 10
+  Targets: net10.0-android, net10.0-ios, net10.0-maccatalyst, net10.0-windows10.0.19041.0
+  Architecture: MVVM (simple layering), no DI yet, default template
+  Backend: .NET Framework Web API 2 (OAuth2 password grant + SQL Server)
+  Testing: none (no test project)
+  Style: Spanish (es-MX) for user-facing content
+
+strict_tdd: false
+
+testing:
+  strict_tdd_mode: disabled
+  detected: 2026-11-13
+  test_runner:
+    command: ""
+    framework: none
+  layers:
+    unit: false
+    integration: false
+    e2e: false
+  coverage:
+    available: false
+    command: ""
+  quality_tools:
+    linter: none
+    type_checker: "compiler (Nullable habilitado)"
+    formatter: none
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+    - Identify affected modules/packages
+  specs:
+    - Use Given/When/Then format for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+  design:
+    - Include sequence diagrams for complex flows
+    - Document architecture decisions with rationale
+  tasks:
+    - Group tasks by phase (infrastructure, implementation, testing)
+    - Use hierarchical numbering (1.1, 1.2, etc.)
+    - Keep tasks small enough to complete in one session
+  apply:
+    - Follow existing code patterns and conventions
+    - Load relevant coding skills for the project stack
+    tdd: false
+    test_command: ""
+  verify:
+    test_command: ""
+    build_command: "dotnet build -f net10.0-android"
+    coverage_threshold: 0
+  archive:
+    - Warn before merging destructive deltas (large removals)

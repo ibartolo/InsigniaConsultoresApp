@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="InsigniaConsultoresApp.Views.CampaignDetailPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Detalle de campaña"
+    BackgroundColor="{StaticResource BrandBackground}">
+
+    <Grid>
+
+        <ScrollView>
+            <VerticalStackLayout Padding="20" Spacing="16">
+
+                <Label Text="{Binding Campaign.Nombre}" Style="{StaticResource BrandTitle}" />
+
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Descripción" Style="{StaticResource BrandFieldLabel}" />
+                    <Label Text="{Binding Campaign.Descripcion}" Style="{StaticResource BrandLabel}" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Asunto" Style="{StaticResource BrandFieldLabel}" />
+                    <Label Text="{Binding Campaign.Asunto}" Style="{StaticResource BrandLabel}" />
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Estatus" Style="{StaticResource BrandFieldLabel}" />
+                    <Label Text="{Binding Campaign.EstatusTexto}" Style="{StaticResource BrandLabel}" />
+                </VerticalStackLayout>
+
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Fecha de inicio" Style="{StaticResource BrandFieldLabel}" />
+                        <Label Text="{Binding Campaign.FechaInicio, StringFormat='{0:dd/MM/yyyy}'}" Style="{StaticResource BrandLabel}" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1" Spacing="4">
+                        <Label Text="Fecha de fin" Style="{StaticResource BrandFieldLabel}" />
+                        <Label Text="{Binding Campaign.FechaFin, StringFormat='{0:dd/MM/yyyy}'}" Style="{StaticResource BrandLabel}" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="16">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Total" Style="{StaticResource BrandFieldLabel}" />
+                        <Label Text="{Binding Campaign.Total}" Style="{StaticResource BrandLabel}" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1" Spacing="4">
+                        <Label Text="Enviados" Style="{StaticResource BrandFieldLabel}" />
+                        <Label Text="{Binding Campaign.Enviados}" Style="{StaticResource BrandLabel}" />
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="2" Spacing="4">
+                        <Label Text="Pendientes" Style="{StaticResource BrandFieldLabel}" />
+                        <Label Text="{Binding Campaign.Pendientes}" Style="{StaticResource BrandLabel}" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <Button
+                    Text="Comenzar campaña"
+                    Command="{Binding StartCampaignCommand}"
+                    Style="{StaticResource BrandButton}" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Cargando -->
+        <ActivityIndicator
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            Color="{StaticResource BrandOrange}"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+
+        <!-- Error -->
+        <Label
+            Text="{Binding ErrorMessage}"
+            IsVisible="{Binding HasError}"
+            TextColor="#c53030"
+            FontSize="14"
+            Padding="24"
+            HorizontalTextAlignment="Center"
+            VerticalOptions="Center" />
+
+    </Grid>
+
+</ContentPage>

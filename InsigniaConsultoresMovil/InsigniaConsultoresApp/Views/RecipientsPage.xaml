@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="InsigniaConsultoresApp.Views.RecipientsPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="Destinatarios"
+    BackgroundColor="{StaticResource BrandBackground}">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Búsqueda local por nombre o teléfono. -->
+        <SearchBar
+            Grid.Row="0"
+            Placeholder="Buscar por nombre o teléfono"
+            Text="{Binding SearchText}"
+            Margin="12,8" />
+
+        <Grid Grid.Row="1">
+
+            <CollectionView ItemsSource="{Binding Recipients}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border
+                            Margin="16,6"
+                            Padding="14,12"
+                            StrokeThickness="0"
+                            StrokeShape="RoundRectangle 12"
+                            BackgroundColor="{StaticResource BrandSurface}">
+                            <Border.Shadow>
+                                <Shadow Brush="#000000" Opacity="0.06" Radius="8" Offset="0,2" />
+                            </Border.Shadow>
+                            <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="*,Auto">
+
+                                <Label
+                                    Text="{Binding Nombre}"
+                                    TextColor="{StaticResource BrandPrimary}"
+                                    FontSize="16"
+                                    FontAttributes="Bold"
+                                    LineBreakMode="TailTruncation" />
+
+                                <Border
+                                    Grid.Column="1"
+                                    Padding="10,3"
+                                    StrokeThickness="0"
+                                    StrokeShape="RoundRectangle 999"
+                                    BackgroundColor="{StaticResource BrandInputBackground}"
+                                    VerticalOptions="Center">
+                                    <Label
+                                        Text="{Binding EstadoTexto}"
+                                        TextColor="{StaticResource BrandPrimary}"
+                                        FontSize="12"
+                                        FontAttributes="Bold" />
+                                </Border>
+
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.ColumnSpan="2"
+                                    Text="{Binding Telefono}"
+                                    TextColor="{StaticResource Gray500}"
+                                    FontSize="13" />
+
+                                <Label
+                                    Grid.Row="2"
+                                    Grid.ColumnSpan="2"
+                                    Text="{Binding FechaEnvioTexto}"
+                                    IsVisible="{Binding IsSent}"
+                                    TextColor="{StaticResource Gray500}"
+                                    FontSize="12" />
+
+                                <Label
+                                    Grid.Row="3"
+                                    Grid.ColumnSpan="2"
+                                    Text="{Binding InvalidPhoneHint}"
+                                    IsVisible="{Binding HasInvalidPhone}"
+                                    TextColor="{StaticResource BrandOrange}"
+                                    FontSize="12" />
+
+                                <HorizontalStackLayout
+                                    Grid.Row="4"
+                                    Grid.ColumnSpan="2"
+                                    Spacing="8"
+                                    Margin="0,10,0,0">
+
+                                    <Button
+                                        Text="Enviar"
+                                        Command="{Binding SendCommand}"
+                                        IsEnabled="{Binding CanSend}"
+                                        IsVisible="{Binding IsSent, Converter={StaticResource InvertedBool}}"
+                                        Style="{StaticResource BrandPrimaryButton}"
+                                        HeightRequest="40"
+                                        MinimumHeightRequest="40"
+                                        FontSize="13"
+                                        Padding="18,0" />
+
+                                    <Button
+                                        Text="Deshacer"
+                                        Command="{Binding UndoCommand}"
+                                        IsVisible="{Binding IsSent}"
+                                        Style="{StaticResource BrandButton}"
+                                        HeightRequest="40"
+                                        MinimumHeightRequest="40"
+                                        FontSize="13"
+                                        Padding="18,0" />
+
+                                    <ActivityIndicator
+                                        IsRunning="{Binding IsBusy}"
+                                        IsVisible="{Binding IsBusy}"
+                                        Color="{StaticResource BrandOrange}"
+                                        VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <!-- Cargando -->
+            <ActivityIndicator
+                IsRunning="{Binding IsBusy}"
+                IsVisible="{Binding IsBusy}"
+                Color="{StaticResource BrandOrange}"
+                HorizontalOptions="Center"
+                VerticalOptions="Center" />
+
+            <!-- Error + reintentar -->
+            <VerticalStackLayout
+                IsVisible="{Binding HasError}"
+                Padding="24"
+                Spacing="12"
+                HorizontalOptions="Center"
+                VerticalOptions="Center">
+                <Label
+                    Text="{Binding ErrorMessage}"
+                    TextColor="#c53030"
+                    FontSize="14"
+                    HorizontalTextAlignment="Center" />
+                <Button
+                    Text="Reintentar"
+                    Command="{Binding LoadCommand}"
+                    Style="{StaticResource BrandPrimaryButton}"
+                    WidthRequest="160"
+                    HorizontalOptions="Center" />
+            </VerticalStackLayout>
+
+            <!-- Vacío / sin resultados -->
+            <Label
+                Text="{Binding EmptyMessage}"
+                IsVisible="{Binding IsEmpty}"
+                TextColor="{StaticResource Gray500}"
+                FontSize="14"
+                Padding="24"
+                HorizontalTextAlignment="Center"
+                VerticalOptions="Center" />
+
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

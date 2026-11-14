@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="InsigniaConsultoresApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:views="clr-namespace:InsigniaConsultoresApp.Views"
+    Title="InsigniaConsultoresApp"
+    FlyoutBehavior="Flyout">
+
+    <!-- Login: ruta oculta del flyout, sin flyout ni barra; es el contenido inicial. -->
+    <ShellContent
+        Title="Login"
+        Route="login"
+        Shell.FlyoutBehavior="Disabled"
+        Shell.FlyoutItemIsVisible="False"
+        Shell.TabBarIsVisible="False"
+        ContentTemplate="{DataTemplate views:LoginPage}" />
+
+    <!-- Home: flyout visible con el ítem "Inicio". -->
+    <FlyoutItem
+        Title="Inicio"
+        Route="home"
+        Shell.FlyoutBehavior="Flyout">
+        <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
+    </FlyoutItem>
+
+    <!-- Campañas WhatsApp: listado (ruta de nivel superior del flyout). -->
+    <FlyoutItem
+        Title="Campañas"
+        Route="campaigns"
+        Shell.FlyoutBehavior="Flyout">
+        <ShellContent ContentTemplate="{DataTemplate views:CampaignsPage}" />
+    </FlyoutItem>
+
+    <!-- Encabezado del flyout: logo + usuario autenticado + subtítulo. -->
+    <Shell.FlyoutHeader>
+        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" Padding="16">
+            <Image
+                Source="brand_logo.png"
+                WidthRequest="40"
+                HeightRequest="40"
+                VerticalOptions="Center" />
+            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                <Label
+                    x:Name="UsernameLabel"
+                    FontSize="16"
+                    FontAttributes="Bold"
+                    TextColor="{StaticResource BrandPrimary}" />
+                <Label
+                    Text="Sesión activa"
+                    FontSize="12"
+                    TextColor="{StaticResource Gray500}" />
+            </VerticalStackLayout>
+        </Grid>
+    </Shell.FlyoutHeader>
+
+    <!-- Menú del flyout: cerrar sesión. -->
+    <MenuItem Text="Cerrar sesión" Clicked="OnLogoutClicked" />
+
+</Shell>
