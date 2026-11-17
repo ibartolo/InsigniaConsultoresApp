@@ -47,6 +47,8 @@ El sistema DEBE llamar `GET api/Campana/List`, conservar SOLO las campañas con 
 
 El sistema DEBE abrir el detalle con la campaña seleccionada y DEBE llamar `GET api/Campana/{id}` para datos frescos. DEBE mostrar `Nombre`, `Descripcion`, `Asunto`, `Estatus` (mapeado a etiqueta en español), `FechaInicio`, `FechaFin`, `Total`, `Enviados`, `Pendientes`. El botón "Comenzar campaña" DEBE navegar a la pantalla de destinatarios.
 
+La presentación DEBE ser tipo formulario de captura con los campos **bloqueados (solo lectura)**: cada campo muestra su etiqueta arriba y una caja con el valor, sin permitir edición. La `Descripcion` DEBE mostrarse en un área amplia (aprox. 230 dp de alto, con scroll interno) para poder leer el mensaje completo. El espaciado entre campos DEBE ser suficiente para que títulos y textos no se vean pegados.
+
 #### Scenario: Detalle con datos de la API
 
 - GIVEN el usuario selecciona una campaña

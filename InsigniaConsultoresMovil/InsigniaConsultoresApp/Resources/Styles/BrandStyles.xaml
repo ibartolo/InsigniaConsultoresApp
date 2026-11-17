@@ -35,6 +35,23 @@
         <Setter Property="MinimumHeightRequest" Value="40" />
     </Style>
 
+    <!-- ===== Campos de solo lectura (detalle de campaña) ===== -->
+    <!-- Se ven como una caja de captura, pero bloqueados. -->
+
+    <Style x:Key="BrandReadOnlyField" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="White" />
+        <Setter Property="Stroke" Value="{StaticResource BrandInputBorder}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 10" />
+        <Setter Property="Padding" Value="12,11" />
+    </Style>
+
+    <Style x:Key="BrandReadOnlyText" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource BrandTextBody}" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="LineHeight" Value="1.35" />
+    </Style>
+
     <!-- ===== Botones de marca ===== -->
     <!-- CTA naranja (gradiente #E8952B → #C97A18). MAUI Button admite Background
          (Brush) con gradiente; el ActivityIndicator se superpone en un Grid overlay. -->
@@ -73,6 +90,33 @@
         <Setter Property="CornerRadius" Value="999" />
         <Setter Property="HeightRequest" Value="52" />
         <Setter Property="MinimumHeightRequest" Value="52" />
+    </Style>
+
+    <!-- ===== Tarjetas KPI del Home (indicadores) ===== -->
+    <!-- Fondo blanco, borde sutil (#eef2f7), radio 14 y sombra ligera. -->
+
+    <Style x:Key="KpiCard" TargetType="Border">
+        <Setter Property="BackgroundColor" Value="White" />
+        <Setter Property="Stroke" Value="{StaticResource BrandCardBorder}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 14" />
+        <Setter Property="Padding" Value="14" />
+        <Setter Property="Shadow">
+            <Setter.Value>
+                <Shadow Brush="#000000" Opacity="0.06" Radius="8" Offset="0,2" />
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="KpiValue" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource BrandPrimary}" />
+        <Setter Property="FontSize" Value="26" />
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <Style x:Key="KpiLabel" TargetType="Label">
+        <Setter Property="TextColor" Value="{StaticResource BrandTextBody}" />
+        <Setter Property="FontSize" Value="12" />
     </Style>
 
 </ResourceDictionary>

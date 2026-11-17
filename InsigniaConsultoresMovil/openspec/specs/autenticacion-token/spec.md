@@ -12,7 +12,7 @@ El sistema DEBE mostrar una pantalla de login con:
 
 - **Hero compacto** (altura según contenido, sin alto fijo): logo (56×56, radio 12px) arriba y título **"Insignia Consultores Financieros"** debajo.
 - **Etiquetas arriba de cada campo**: "Usuario" y "Contraseña" (negrita, ~13px, color `#0F4C81`).
-- **Campos sin caja**: sin borde, sin fondo y sin caja, a todo el ancho del contenido; separados visualmente solo por una **línea inferior de 1px `#dde5ee`** que pasa a **2px naranja `#E8952B`** al enfocar.
+- **Campos sin caja**: sin borde, sin fondo y sin caja, a todo el ancho del contenido; separados visualmente solo por una **línea inferior de 1px `#dde5ee`** que pasa a **2px naranja `#E8952B`** al enfocar. La línea nativa del `Entry` de Android DEBE eliminarse explícitamente (mapeador de `EntryHandler` con fondo transparente) para que no aparezcan dos líneas; NO debe usarse `BackgroundTintList` porque exige un tema MaterialComponents y provoca un crash de arranque.
 - Campo de contraseña enmascarado y botón "Iniciar sesión" con `ActivityIndicator` dentro del botón.
 - **Footer "By DESI"** centrado, pequeño (~12px) y de color atenuado.
 

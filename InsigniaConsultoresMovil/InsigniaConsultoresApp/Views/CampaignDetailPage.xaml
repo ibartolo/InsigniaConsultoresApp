@@ -9,55 +9,89 @@
     <Grid>
 
         <ScrollView>
-            <VerticalStackLayout Padding="20" Spacing="16">
+            <VerticalStackLayout Padding="20,16,20,28" Spacing="18">
 
-                <Label Text="{Binding Campaign.Nombre}" Style="{StaticResource BrandTitle}" />
-
+                <!-- Encabezado -->
                 <VerticalStackLayout Spacing="4">
+                    <Label Text="Detalle de campaña" Style="{StaticResource BrandTitle}" />
+                    <Label
+                        Text="{Binding Campaign.Nombre}"
+                        FontSize="18"
+                        FontAttributes="Bold"
+                        TextColor="{StaticResource BrandPrimary}" />
+                </VerticalStackLayout>
+
+                <!-- Descripción: área amplia de solo lectura para poder leer el mensaje completo -->
+                <VerticalStackLayout Spacing="6">
                     <Label Text="Descripción" Style="{StaticResource BrandFieldLabel}" />
-                    <Label Text="{Binding Campaign.Descripcion}" Style="{StaticResource BrandLabel}" />
+                    <Border Style="{StaticResource BrandReadOnlyField}" HeightRequest="230">
+                        <ScrollView>
+                            <Label
+                                Text="{Binding Campaign.Descripcion}"
+                                Style="{StaticResource BrandReadOnlyText}" />
+                        </ScrollView>
+                    </Border>
                 </VerticalStackLayout>
 
-                <VerticalStackLayout Spacing="4">
+                <!-- Asunto -->
+                <VerticalStackLayout Spacing="6">
                     <Label Text="Asunto" Style="{StaticResource BrandFieldLabel}" />
-                    <Label Text="{Binding Campaign.Asunto}" Style="{StaticResource BrandLabel}" />
+                    <Border Style="{StaticResource BrandReadOnlyField}">
+                        <Label
+                            Text="{Binding Campaign.Asunto}"
+                            Style="{StaticResource BrandReadOnlyText}" />
+                    </Border>
                 </VerticalStackLayout>
 
-                <VerticalStackLayout Spacing="4">
+                <!-- Estatus -->
+                <VerticalStackLayout Spacing="6">
                     <Label Text="Estatus" Style="{StaticResource BrandFieldLabel}" />
-                    <Label Text="{Binding Campaign.EstatusTexto}" Style="{StaticResource BrandLabel}" />
+                    <Border Style="{StaticResource BrandReadOnlyField}">
+                        <Label
+                            Text="{Binding Campaign.EstatusTexto}"
+                            Style="{StaticResource BrandReadOnlyText}" />
+                    </Border>
                 </VerticalStackLayout>
 
-                <Grid ColumnDefinitions="*,*" ColumnSpacing="16">
-                    <VerticalStackLayout Spacing="4">
-                        <Label Text="Fecha de inicio" Style="{StaticResource BrandFieldLabel}" />
-                        <Label Text="{Binding Campaign.FechaInicio, StringFormat='{0:dd/MM/yyyy}'}" Style="{StaticResource BrandLabel}" />
-                    </VerticalStackLayout>
-                    <VerticalStackLayout Grid.Column="1" Spacing="4">
-                        <Label Text="Fecha de fin" Style="{StaticResource BrandFieldLabel}" />
-                        <Label Text="{Binding Campaign.FechaFin, StringFormat='{0:dd/MM/yyyy}'}" Style="{StaticResource BrandLabel}" />
-                    </VerticalStackLayout>
+                <!-- Fechas -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="14" RowDefinitions="Auto,Auto" RowSpacing="6">
+                    <Label Grid.Row="0" Grid.Column="0" Text="Fecha de inicio" Style="{StaticResource BrandFieldLabel}" />
+                    <Label Grid.Row="0" Grid.Column="1" Text="Fecha de fin" Style="{StaticResource BrandFieldLabel}" />
+
+                    <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource BrandReadOnlyField}">
+                        <Label
+                            Text="{Binding Campaign.FechaInicio, StringFormat='{0:dd/MM/yyyy}'}"
+                            Style="{StaticResource BrandReadOnlyText}" />
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource BrandReadOnlyField}">
+                        <Label
+                            Text="{Binding Campaign.FechaFin, StringFormat='{0:dd/MM/yyyy}'}"
+                            Style="{StaticResource BrandReadOnlyText}" />
+                    </Border>
                 </Grid>
 
-                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="16">
-                    <VerticalStackLayout Spacing="4">
-                        <Label Text="Total" Style="{StaticResource BrandFieldLabel}" />
-                        <Label Text="{Binding Campaign.Total}" Style="{StaticResource BrandLabel}" />
-                    </VerticalStackLayout>
-                    <VerticalStackLayout Grid.Column="1" Spacing="4">
-                        <Label Text="Enviados" Style="{StaticResource BrandFieldLabel}" />
-                        <Label Text="{Binding Campaign.Enviados}" Style="{StaticResource BrandLabel}" />
-                    </VerticalStackLayout>
-                    <VerticalStackLayout Grid.Column="2" Spacing="4">
-                        <Label Text="Pendientes" Style="{StaticResource BrandFieldLabel}" />
-                        <Label Text="{Binding Campaign.Pendientes}" Style="{StaticResource BrandLabel}" />
-                    </VerticalStackLayout>
+                <!-- Totales -->
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="14" RowDefinitions="Auto,Auto" RowSpacing="6">
+                    <Label Grid.Row="0" Grid.Column="0" Text="Total" Style="{StaticResource BrandFieldLabel}" />
+                    <Label Grid.Row="0" Grid.Column="1" Text="Enviados" Style="{StaticResource BrandFieldLabel}" />
+                    <Label Grid.Row="0" Grid.Column="2" Text="Pendientes" Style="{StaticResource BrandFieldLabel}" />
+
+                    <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource BrandReadOnlyField}">
+                        <Label Text="{Binding Campaign.Total}" Style="{StaticResource BrandReadOnlyText}" />
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource BrandReadOnlyField}">
+                        <Label Text="{Binding Campaign.Enviados}" Style="{StaticResource BrandReadOnlyText}" />
+                    </Border>
+                    <Border Grid.Row="1" Grid.Column="2" Style="{StaticResource BrandReadOnlyField}">
+                        <Label Text="{Binding Campaign.Pendientes}" Style="{StaticResource BrandReadOnlyText}" />
+                    </Border>
                 </Grid>
 
                 <Button
                     Text="Comenzar campaña"
                     Command="{Binding StartCampaignCommand}"
-                    Style="{StaticResource BrandButton}" />
+                    Style="{StaticResource BrandButton}"
+                    Margin="0,10,0,0" />
 
             </VerticalStackLayout>
         </ScrollView>

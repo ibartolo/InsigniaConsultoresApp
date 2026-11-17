@@ -21,6 +21,14 @@ namespace InsigniaConsultoresApp
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            // Android: quita la línea nativa del Entry (equivale a android:background="@null").
+            // Se hace con SetBackgroundColor para no depender del tema MaterialComponents.
+#if ANDROID
+            Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping(
+                "NoUnderline",
+                (handler, view) => handler.PlatformView.SetBackgroundColor(Android.Graphics.Color.Transparent));
+#endif
+
             // HttpClient único del API: BaseAddress y Timeout centralizados en AuthConfig.
             builder.Services.AddSingleton(_ => new HttpClient
             {
@@ -33,6 +41,7 @@ namespace InsigniaConsultoresApp
             builder.Services.AddSingleton<ITokenStore, TokenStore>();
             builder.Services.AddSingleton<IAuthService, AuthService>();
             builder.Services.AddSingleton<ICampaignService, CampaignService>();
+            builder.Services.AddSingleton<IReportsService, ReportsService>();
 
             // ViewModels (transient): estado por vista/vida.
             builder.Services.AddTransient<LoginViewModel>();

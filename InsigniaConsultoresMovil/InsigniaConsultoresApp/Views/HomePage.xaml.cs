@@ -4,11 +4,13 @@ using Microsoft.Maui.Controls;
 namespace InsigniaConsultoresApp.Views
 {
     /// <summary>
-    /// Pantalla Home post-autenticación (placeholder en blanco). BindingContext inyectado por constructor.
+    /// Pantalla Home post-autenticación: sección de indicadores (KPIs) con selector de
+    /// rango de fechas. BindingContext inyectado por constructor; la carga inicial corre una sola vez.
     /// </summary>
     public partial class HomePage : ContentPage
     {
         private readonly HomeViewModel _viewModel;
+        private bool _loaded;
 
         public HomePage(HomeViewModel viewModel)
         {
@@ -21,7 +23,12 @@ namespace InsigniaConsultoresApp.Views
         {
             base.OnAppearing();
 
-            // Carga el nombre de usuario desde la sesión persistida (para el flyout).
+            // Carga una sola vez (nombre de usuario + indicadores); al volver de otra
+            // pantalla no se recarga.
+            if (_loaded)
+                return;
+            _loaded = true;
+
             await _viewModel.LoadAsync();
         }
     }

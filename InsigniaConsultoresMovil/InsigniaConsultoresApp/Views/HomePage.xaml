@@ -5,13 +5,112 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     BackgroundColor="{StaticResource BrandBackground}">
 
-    <!-- Página en blanco (placeholder): sin contenido de negocio aún. -->
-    <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8">
-        <Label Text="Inicio" Style="{StaticResource BrandTitle}" HorizontalOptions="Center" />
-        <Label Text="Sin contenido por ahora"
-               TextColor="{StaticResource Gray500}"
-               FontSize="14"
-               HorizontalOptions="Center" />
-    </VerticalStackLayout>
+    <Grid>
+
+        <!-- Indicadores con pull-to-refresh. -->
+        <RefreshView
+            IsRefreshing="{Binding IsRefreshing, Mode=OneWay}"
+            Command="{Binding RefreshCommand}">
+            <ScrollView>
+                <VerticalStackLayout Padding="16" Spacing="16">
+
+                    <Label Text="Indicadores" Style="{StaticResource BrandTitle}" />
+
+                    <!-- Periodo devuelto por la API (o el rango seleccionado). -->
+                    <Label
+                        Text="{Binding PeriodoTexto}"
+                        Style="{StaticResource BrandLabel}"
+                        TextColor="{StaticResource Gray500}" />
+
+                    <!-- Selector de rango Desde / Hasta. -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="Desde" Style="{StaticResource BrandFieldLabel}" />
+                            <DatePicker
+                                Date="{Binding Desde, Mode=TwoWay}"
+                                Format="dd/MM/yyyy" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                            <Label Text="Hasta" Style="{StaticResource BrandFieldLabel}" />
+                            <DatePicker
+                                Date="{Binding Hasta, Mode=TwoWay}"
+                                Format="dd/MM/yyyy"
+                                MaximumDate="{Binding Hoy}" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <!-- 5 tarjetas KPI en una cuadrícula de 2 columnas (la 5ª ocupa todo el ancho). -->
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="12" RowSpacing="12">
+
+                        <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource KpiCard}">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Clientes nuevos" Style="{StaticResource KpiLabel}" />
+                                <Label Text="{Binding ClientesNuevosTexto}" Style="{StaticResource KpiValue}" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource KpiCard}">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Pólizas nuevas" Style="{StaticResource KpiLabel}" />
+                                <Label Text="{Binding PolizasNuevasTexto}" Style="{StaticResource KpiValue}" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource KpiCard}">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Pólizas renovadas" Style="{StaticResource KpiLabel}" />
+                                <Label Text="{Binding PolizasRenovadasTexto}" Style="{StaticResource KpiValue}" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource KpiCard}">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Pólizas vencidas" Style="{StaticResource KpiLabel}" />
+                                <Label Text="{Binding PolizasVencidasTexto}" Style="{StaticResource KpiValue}" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource KpiCard}">
+                            <VerticalStackLayout Spacing="4">
+                                <Label Text="Pólizas canceladas" Style="{StaticResource KpiLabel}" />
+                                <Label Text="{Binding PolizasCanceladasTexto}" Style="{StaticResource KpiValue}" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                    </Grid>
+
+                </VerticalStackLayout>
+            </ScrollView>
+        </RefreshView>
+
+        <!-- Cargando -->
+        <ActivityIndicator
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            Color="{StaticResource BrandOrange}"
+            HorizontalOptions="Center"
+            VerticalOptions="Center" />
+
+        <!-- Error + reintentar -->
+        <VerticalStackLayout
+            IsVisible="{Binding HasError}"
+            Padding="24"
+            Spacing="12"
+            HorizontalOptions="Center"
+            VerticalOptions="Center">
+            <Label
+                Text="{Binding ErrorMessage}"
+                TextColor="#c53030"
+                FontSize="14"
+                HorizontalTextAlignment="Center" />
+            <Button
+                Text="Reintentar"
+                Command="{Binding LoadCommand}"
+                Style="{StaticResource BrandPrimaryButton}"
+                WidthRequest="160"
+                HorizontalOptions="Center" />
+        </VerticalStackLayout>
+
+    </Grid>
 
 </ContentPage>

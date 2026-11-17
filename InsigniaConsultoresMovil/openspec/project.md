@@ -8,13 +8,14 @@ pólizas, consultas y flujos propios del negocio asegurador.
 
 ## Capacidades (specs — fuente de verdad)
 
-Tras los cambios archivados (`login-autenticacion-token` y `campanas-whatsapp`),
+Tras los cambios archivados (`login-autenticacion-token`, `campanas-whatsapp` y `indicadores-home`),
 existen estas capacidades en el árbol de specs principal (`openspec/specs/`):
 
 - `branding` — identidad visual: ícono, splash y paleta de marca.
 - `autenticacion-token` — login OAuth2 (password grant), token seguro y auto-login.
-- `inicio-y-navegacion` — Home post-autenticación con Shell Flyout (incluye el ítem "Campañas").
+- `inicio-y-navegacion` — Home post-autenticación con Shell Flyout (incluye el ítem "Campañas" y la sección de indicadores KPIs).
 - `campanas-whatsapp` — listado/detalle de campañas WhatsApp, preparación de destinatarios y envío 1 a 1 con registro de estado.
+- `indicadores-home` — sección de 5 KPIs en Home con selector de rango de fechas, pull-to-refresh y manejo de estados (carga/error/401).
 
 ## Stack
 
@@ -77,6 +78,9 @@ InsigniaConsultoresApp/
 - Módulo de campañas WhatsApp implementado: listado filtrado (`Canal == 2`), detalle,
   preparación/lectura de destinatarios, búsqueda local, envío 1 a 1 por deep link
   `wa.me/52…` y deshacer, con registro de estado contra el backend.
+- Módulo de indicadores del Home implementado: 5 tarjetas KPI con selector de rango
+  (Desde/Hasta), pull-to-refresh y manejo 401/errores. Conteos globales (sin filtro
+  por compañía), aceptado tal cual.
 - MVVM con capas simples (`Models/`, `Services/`, `Validations/`, `ViewModels/`,
   `Views/`) y DI registrada en `MauiProgram.cs`.
 - Android-only: `TargetFrameworks` = `net10.0-android`.
